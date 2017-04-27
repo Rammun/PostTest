@@ -9,7 +9,13 @@ namespace PostTest.Core.Models
         /// </summary>
         [Required]
         [Display(Name = "Вес")]
-        public double Weight { get; set; }
+        public string Weight { get; set; }
+
+        /// <summary>
+        /// Опись
+        /// </summary>
+        [Display(Name = "Опись")]
+        public string Inventory { get; set; }
 
         /// <summary>
         /// Получатель
@@ -24,11 +30,5 @@ namespace PostTest.Core.Models
         [Required]
         [Display(Name = "Отправитель")]
         public MemberViewModel Sender { get; set; }
-
-        /// <summary>
-        /// Опись
-        /// </summary>
-        [Display(Name = "Опись")]
-        public string Inventory { get; set; }
     }
 }

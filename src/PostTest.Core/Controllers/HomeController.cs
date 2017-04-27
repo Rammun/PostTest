@@ -22,23 +22,13 @@ namespace PostTest.Core.Controllers
 
         public ActionResult Index()
         {
-            var parcels = _dbContext
-                .Parcels
-                .Include(r => r.Recipient)
-                .Include(s => s.Sender)
-                .ToList();
-
-            ViewBag.Parcels = _mapper.Map<IEnumerable<Parcel>, IEnumerable<ParcelViewModel>>(parcels);
-            ViewBag.Register = new ParcelRegisterViewModel();
-
-            return View(new ParcelRegisterViewModel());
+            return View();
         }
 
         [HttpGet]
         public ActionResult ParcelRegister()
         {
             var parcel = new ParcelRegisterViewModel();
-
             return PartialView("_ParcelRegister", parcel);
         }
 
@@ -53,41 +43,37 @@ namespace PostTest.Core.Controllers
                 _dbContext.SaveChanges();
 
                 return Ok(true);
-                //return PartialView("_ParcelRegister", new ParcelRegisterViewModel());
             }
 
             return Ok(false);
-            //return PartialView("_ParcelRegister", model);
-
-            //var parcels =_mapper.Map<IEnumerable<Parcel>, IEnumerable<ParcelViewModel>>(_dbContext.Parcels.ToList());
-            //return PartialView("_ParselSearch", parcels);
         }
 
         [HttpGet]
         public ActionResult ParcelSearch(string search = null)
         {
             var parcels = _dbContext
-                 .Parcels
-                 .Include(r => r.Recipient)
-                 .Include(s => s.Sender)
-                 .ToList();
+                .Parcels
+                .Include(r => r.Recipient)
+                .Include(s => s.Sender);
 
-            var result = Mapper.Map<IEnumerable<Parcel>, IEnumerable<ParcelViewModel>>(parcels);
+            IEnumerable<Parcel> answer = parcels;
 
-            if (string.IsNullOrEmpty(search))
+            if (!string.IsNullOrEmpty(search))
             {
-                return PartialView("_ParcelSearch", result);
+                answer = parcels
+                    .Where(x =>
+                        x.Recipient.Address.Contains(search) ||
+                        x.Recipient.FirstName.Contains(search) ||
+                        x.Recipient.LastName.Contains(search) ||
+                        x.Recipient.Patronymic.Contains(search) ||
+                        x.Sender.Address.Contains(search) ||
+                        x.Sender.FirstName.Contains(search) ||
+                        x.Sender.LastName.Contains(search) ||
+                        x.Sender.Patronymic.Contains(search));
             }
 
-            var filterResult = result
-                                .Where(x =>
-                                        x.RecipientAdress.Contains(search) ||
-                                        x.SenderAdress.Contains(search) ||
-                                        x.RecipientFullName.Contains(search) ||
-                                        x.SenderFullName.Contains(search))
-                                .ToList();
-
-            return PartialView("_ParcelSearch", filterResult);
+            var result = Mapper.Map<IEnumerable<Parcel>, IEnumerable<ParcelViewModel>>(answer.ToList());
+            return PartialView("_ParcelSearch", result);
         }
 
         public IActionResult About()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -12,9 +13,17 @@ namespace PostTest.Core.Mapping.Profiles
     {
         public ViewModelToEntitylMappingProfile()
         {
-            CreateMap<ParcelRegisterViewModel, Parcel>();
+            CreateMap<ParcelRegisterViewModel, Parcel>()
+                .ForMember(x => x.Weight, y => y.MapFrom(z => ToDouble(z.Weight)));
 
             CreateMap<MemberViewModel, Member>();
+        }
+
+        private double ToDouble(string param)
+        {
+            double temp;
+            double.TryParse(param.Replace(',','.'), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out temp);
+            return temp;
         }
     }
 }

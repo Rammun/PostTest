@@ -1,10 +1,4 @@
-﻿@model PostTest.Core.Models.ParcelRegisterViewModel
-
-@using System.Collections.Generic
-@using Newtonsoft.Json
-@using PostTest.Core.Models
-
-@{
+﻿@{
     ViewBag.Title = "Home Page";
 }
 
@@ -12,7 +6,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h2>Почтовый офис</h2>
-            <form asp-controller="Home" asp-action="ParcelSearch" asp-antiforgery="false" method="get" class="form-horizontal" role="form" id="formSearch">
+            <form class="form-horizontal" role="form" id="formSearch">
                 <input type="text" name="search" id="inputSearch" />
                 <input type="button" value="Поиск" id="buttonSearch"/>
             </form>
@@ -31,7 +25,7 @@
                             <!-- Основное содержимое модального окна -->
                             <div class="modal-body">
                                 <div class="container-fluid" id="register">
-                                    @*@{ await Html.RenderPartialAsync("_ParcelRegister", (ParcelRegisterViewModel)ViewBag.Register); }*@
+                                    @{ await Html.RenderPartialAsync("_ParcelRegister"); }
                                 </div>
                             </div>
                             <!-- Футер модального окна -->
@@ -51,36 +45,17 @@
 @section Scripts {
     <script>
         searchRender();
-        registerRender();
 
         $(document).ready(function() {
             $('#buttonSearch').click(searchRender);
         });
 
-        $(document).ready(function() {
-            $('#inputRegister').click(function() {
-                alert("qqq");
-                $.ajax({
-                    url: '@Url.Action("ParcelRegister", "Home")',
-                    data: ' ',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    dataType: 'json',
-                    success: function(obj) {
-                        closeModal();
-                    },
-                    error: function(obj) {
-                        alert('Error!');
-                    }
-                });
-            });
-        });
-
         function closeModal(obj) {
-            if (obj == true) {
+            if (obj) {
                 $('#registerModal').modal("hide");
                 searchRender();
-            }
+                clearForm();
+            };
         }
 
         function searchRender() {
@@ -97,24 +72,10 @@
             });
         }
 
-        function registerRender() {
-            $.ajax({
-                url: '@Url.Action("ParcelRegister", "Home")',
-                data: null,
-                type: 'GET',
-                success: function(obj) {
-                    $('#register').html(obj);
-                },
-                error: function(obj) {
-                    alert('Error!');
-                }
-            });
-        }
-
         function onRegister() {
             $.ajax({
                 url: '@Url.Action("ParcelRegister", "Home")',
-                data: getFormObj($('#formRegister')),
+                data: getFormJson(),
                 type: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
@@ -127,27 +88,37 @@
             });
         }
 
-        function getFormObj(form) {
-            var param = {};
-            param.Recipient = {};
-            param.Sender = {};
+        function getFormJson() {
+            var obj = {
+                weight: $('#Weight').val(),
+                inventory: $('#Inventory').val(),
+                recipient: {
+                    firstName: $('#Recipient_FirstName').val(),
+                    lastName: $('#Recipient_LastName').val(),
+                    patronymic: $('#Recipient_Patronymic').val(),
+                    address: $('#Recipient_Address').val()
+                },
+                sender: {
+                    firstName: $('#Sender_FirstName').val(),
+                    lastName: $('#Sender_LastName').val(),
+                    patronymic: $('#Sender_Patronymic').val(),
+                    address: $('#Sender_Address').val()
+                }
+            };
+            return JSON.stringify(obj);
+        }
 
-            var formParam = form.serializeArray();
-
-            param.Weight = formParam[0].value;
-            param.Inventory = formParam[1].value;
-
-            param.Recipient.FirstName = formParam[2].value;
-            param.Recipient.LastName = formParam[3].value;
-            param.Recipient.Patronymic = formParam[4].value;
-            param.Recipient.Address = formParam[5].value;
-
-            param.Sender.FirstName = formParam[6].value;
-            param.Sender.LastName = formParam[7].value;
-            param.Sender.Patronymic = formParam[8].value;
-            param.Sender.Address = formParam[9].value;
-
-            return JSON.stringify(param);
+        function clearForm() {
+            $('#Weight').val("");
+            $('#Inventory').val("");
+            $('#Recipient_FirstName').val("");
+            $('#Recipient_LastName').val("");
+            $('#Recipient_Patronymic').val("");
+            $('#Recipient_Address').val("");
+            $('#Sender_FirstName').val("");
+            $('#Sender_LastName').val("");
+            $('#Sender_Patronymic').val("");
+            $('#Sender_Address').val("");
         }
     </script>
 }

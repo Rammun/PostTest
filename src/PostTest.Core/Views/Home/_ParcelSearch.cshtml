@@ -1,17 +1,15 @@
-﻿@using PostTest.Core.Models
-
-@model IEnumerable<ParcelViewModel>
+﻿@model IEnumerable<PostTest.Core.Models.ParcelViewModel>
 
 @{
     <table class="table table-hover table-bordered">
         <thead>
             <tr>
                 <th>N</th>
-                <th>@Html.DisplayNameFor(x => x.Weight)</th>
                 <th>@Html.DisplayNameFor(x => x.RecipientFullName)</th>
-                <th>@Html.DisplayNameFor(x => x.SenderFullName)</th>
                 <th>@Html.DisplayNameFor(x => x.RecipientAdress)</th>
+                <th>@Html.DisplayNameFor(x => x.SenderFullName)</th>
                 <th>@Html.DisplayNameFor(x => x.SenderAdress)</th>
+                <th>@Html.DisplayNameFor(x => x.Weight)</th>
                 <th>@Html.DisplayNameFor(x => x.Inventory)</th>
             </tr>
         </thead>
@@ -23,18 +21,18 @@
                     n++;
                     <tr>
                         <td>@n</td>
-                        <td>@parcel.Weight</td>
                         <td>@parcel.RecipientFullName</td>
-                        <td>@parcel.SenderFullName</td>
                         <td>@parcel.RecipientAdress</td>
+                        <td>@parcel.SenderFullName</td>
                         <td>@parcel.SenderAdress</td>
+                        <td>@parcel.Weight</td>
                         @if (string.IsNullOrEmpty(parcel.Inventory))
                         {
                             <td>Отсутствует</td>
                         }
                         else
                         {
-                            <td>Отсутствует</td>
+                            <td>@parcel.Inventory</td>
                         }
                     </tr>
                 }
