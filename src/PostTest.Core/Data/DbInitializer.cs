@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using PostTest.Core.Entities;
 
 namespace PostTest.Core.Data
@@ -33,6 +30,14 @@ namespace PostTest.Core.Data
                 Address = "Bryansk"
             };
 
+            var member3 = new Member
+            {
+                FirstName = "Anna",
+                LastName = "Petrova",
+                Patronymic = "Petrovna",
+                Address = "Kaluga"
+            };
+
             var parcel1 = new Parcel
             {
                 Weight = 1000,
@@ -44,13 +49,22 @@ namespace PostTest.Core.Data
             var parcel2 = new Parcel
             {
                 Weight = 2000,
-                Recipient = member2,
-                Sender = member1,
+                Recipient = member1,
+                Sender = member3,
                 Inventory = "Very few things"
+            };
+
+            var parcel3 = new Parcel
+            {
+                Weight = 300,
+                Recipient = member2,
+                Sender = member3,
+                Inventory = string.Empty
             };
 
             context.Parcels.Add(parcel1);
             context.Parcels.Add(parcel2);
+            context.Parcels.Add(parcel3);
 
             context.SaveChanges();
         }

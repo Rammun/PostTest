@@ -14,7 +14,7 @@
             <h2>Почтовый офис</h2>
             <form asp-controller="Home" asp-action="ParcelSearch" asp-antiforgery="false" method="get" class="form-horizontal" role="form" id="formSearch">
                 <input type="text" name="search" id="inputSearch" />
-                <input type="button" value="Поиск" id="btSearch"/>
+                <input type="button" value="Поиск" id="buttonSearch"/>
             </form>
         </div>
         <div class="panel-body">
@@ -25,13 +25,14 @@
                         <div class="modal-content">
                             <!-- Заголовок модального окна -->
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="closeModal()">×</button>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                 <h4 class="modal-title">Регистрация посылки</h4>
                             </div>
                             <!-- Основное содержимое модального окна -->
-                            <div class="modal-body" id="register">
-                                @*@{ await Html.RenderPartialAsync("_ParcelRegister", (ParcelRegisterViewModel) ViewBag.Register); }*@
-                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid" id="register">
+                                    @*@{ await Html.RenderPartialAsync("_ParcelRegister", (ParcelRegisterViewModel)ViewBag.Register); }*@
+                                </div>
                             <!-- Футер модального окна -->
                             <div id="mfooter" class="modal-footer">
                             </div>
@@ -48,34 +49,23 @@
 
 @section Scripts {
     <script>
-
         searchRender();
+        registerRender();
 
-        $.ajax({
-            url: '@Url.Action("ParcelRegister", "Home")',
-            data: null,
-            type: 'GET',
-            success: function(obj) {
-                $('#register').html(obj);
-            },
-            error: function(obj) {
-                alert('Error!');
-            }
-        });
-        
         $(document).ready(function() {
-            $('#btSearch').click(searchRender);
+            $('#buttonSearch').click(searchRender);
         });
 
         $(document).ready(function() {
-            $('#inputRegister').click(function () {
+            $('#inputRegister').click(function() {
+                alert("qqq");
                 $.ajax({
                     url: '@Url.Action("ParcelRegister", "Home")',
-                    data: '@JsonConvert.SerializeObject(Model)',
+                    data: ' ',
                     type: 'POST',
                     contentType: 'application/json',
                     dataType: 'json',
-                    success: function (obj) {
+                    success: function(obj) {
                         closeModal();
                     },
                     error: function(obj) {
@@ -85,9 +75,11 @@
             });
         });
 
-        function closeModal() {
-            $('#registerModal').modal("hide");
-            searchRender();
+        function closeModal(obj) {
+            if (obj == true) {
+                $('#registerModal').modal("hide");
+                searchRender();
+            }
         }
 
         function searchRender() {
@@ -104,5 +96,42 @@
             });
         }
 
+        function registerRender() {
+            $.ajax({
+                url: '@Url.Action("ParcelRegister", "Home")',
+                data: null,
+                type: 'GET',
+                success: function(obj) {
+                    $('#register').html(obj);
+                },
+                error: function(obj) {
+                    alert('Error!');
+                }
+            });
+        }
+
+        function onRegister() {
+            $.ajax({
+                url: '@Url.Action("ParcelRegister", "Home")',
+                data: getFormObj($('#formRegister')),
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function(obj) {
+                    closeModal(obj);
+                },
+                error: function(obj) {
+                    alert('Error!');
+                }
+            });
+        }
+
+        function getFormObj(form) {
+            var param = {};
+            form.serializeArray().forEach(function(item, i, arr) {
+                param[item.Name] = item;
+            });
+            return JSON.stringify(param);
+        }
     </script>
 }

@@ -43,8 +43,7 @@ namespace PostTest.Core.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult ParcelRegister([FromBody]ParcelRegisterViewModel model)
+        public IActionResult ParcelRegister([FromBody]ParcelRegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -53,10 +52,12 @@ namespace PostTest.Core.Controllers
                 _dbContext.Parcels.Add(parcel);
                 _dbContext.SaveChanges();
 
-                return PartialView("_ParcelRegister", new ParcelRegisterViewModel());
+                return Ok(true);
+                //return PartialView("_ParcelRegister", new ParcelRegisterViewModel());
             }
 
-            return PartialView("_ParcelRegister", model);
+            return Ok(false);
+            //return PartialView("_ParcelRegister", model);
 
             //var parcels =_mapper.Map<IEnumerable<Parcel>, IEnumerable<ParcelViewModel>>(_dbContext.Parcels.ToList());
             //return PartialView("_ParselSearch", parcels);
