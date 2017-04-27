@@ -33,7 +33,7 @@ namespace PostTest.Core.Controllers
         }
 
         [HttpPost]
-        public IActionResult ParcelRegister([FromBody]ParcelRegisterViewModel model)
+        public IActionResult ParcelRegister(ParcelRegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -42,10 +42,12 @@ namespace PostTest.Core.Controllers
                 _dbContext.Parcels.Add(parcel);
                 _dbContext.SaveChanges();
 
-                return Ok(true);
+                return RedirectToAction("ParcelSearch");
+                //return Ok(true);
             }
 
-            return Ok(false);
+            return RedirectToAction("ParcelSearch");
+            //return Ok(false);
         }
 
         [HttpGet]

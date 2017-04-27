@@ -1,56 +1,62 @@
-﻿<form class="form-horizontal" role="form" id="formRegister">
+﻿@model PostTest.Core.Models.ParcelRegisterViewModel
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+<form asp-controller="Home" asp-action="ParcelRegister" data-ajax="true" data-ajax-method="POST"  class="form-horizontal" role="form" id="formRegister" data-ajax-mode="replace" data-ajax-update="#searchresults">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <dl class="dl-horizontal">
-        <dt>Вес</dt>
+        <dt><label asp-for="Weight"></label></dt>
         <dd>
-            <input type="text" class="form-control" placeholder="100,50" id="Weight"/>
-            <span id="valWaight"></span>
+            <input type="text" asp-for="Weight" />
+            <span asp-validation-for="Weight"></span>
         </dd>
-        <dt>Опись</dt>
+        <dt><label asp-for="Inventory"></label></dt>
         <dd>
-            <input type="text" class="form-control" placeholder="рубашка,брюки и носки" id="Inventory" />
-            <span id="valInventory"></span>
+            <input type="text" asp-for="Inventory" />
+            <span asp-validation-for="Inventory"></span>
         </dd>
-        <dt>Фамилия получателя</dt>
+        <dt><label asp-for="Recipient.LastName"></label></dt>
         <dd>
-            <input type="text" class="form-control" placeholder="Иванов" id="Recipient_LastName" />
-            <span id="valRecLastName"></span>
+            <input type="text" asp-for="Recipient.LastName" />
+            <span asp-validation-for="Recipient.LastName"></span>
         </dd>
-        <dt>Имя получателя</dt>
+        <dt><label asp-for="Recipient.FirstName"></label></dt>
         <dd>
-            <input type="text" class="form-control" placeholder="Иван" id="Recipient_FirstName" />
-            <span id="valRecFirstName"></span>
+            <input type="text" asp-for="Recipient.FirstName" />
+            <span asp-validation-for="Recipient.FirstName"></span>
         </dd>
-        <dt>Отчество получателя</dt>
+        <dt><label asp-for="Recipient.Patronymic"></label></dt>
         <dd>
-            <input type="text" class="form-control" placeholder="Иванович" id="Recipient_Patronymic" />
-            <span id="valRecPatronymic"></span>
+            <input type="text" asp-for="Recipient.Patronymic" />
+            <span asp-validation-for="Recipient.Patronymic"></span>
         </dd>
-        <dt>Адрес получателя</dt>
+        <dt><label asp-for="Recipient.Address"></label></dt>
         <dd>
-            <input type="text" class="form-control" placeholder="Москва" id="Recipient_Address" />
-            <span id="valRecAddress"></span>
+            <input type="text" asp-for="Recipient.Address" />
+            <span asp-validation-for="Recipient.Address"></span>
         </dd>
-        <dt>Фамилия отправителя</dt>
+        <dt><label asp-for="Sender.LastName"></label></dt>
         <dd>
-            <input type="text" class="form-control" placeholder="Петров" id="Sender_LastName" />
-            <span id="valSendLastName"></span>
+            <input type="text" asp-for="Sender.LastName" />
+            <span asp-validation-for="Sender.LastName"></span>
         </dd>
-        <dt>Имя отправителя</dt>
+        <dt><label asp-for="Sender.FirstName"></label></dt>
         <dd>
-            <input type="text" class="form-control" placeholder="Петр" id="Sender_FirstName" />
-            <span id="valSendFirstName"></span>
+            <input type="text" asp-for="Sender.FirstName" />
+            <span asp-validation-for="Sender.FirstName"></span>
         </dd>
-        <dt>Отчество отправителя</dt>
+        <dt><label asp-for="Sender.Patronymic"></label></dt>
         <dd>
-            <input type="text" class="form-control" placeholder="Петрович" id="Sender_Patronymic" />
-            <span id="valSendPatronymic"></span>
+            <input type="text" asp-for="Sender.Patronymic" />
+            <span asp-validation-for="Sender.Patronymic"></span>
         </dd>
-        <dt>Адрес отправителя</dt>
+        <dt><label asp-for="Sender.Address"></label></dt>
         <dd>
-            <input type="text" class="form-control" placeholder="Брянск" id="Sender_Address" />
-            <span id="valSendAddress"></span>
+            <input type="text" asp-for="Sender.Address" />
+            <span asp-validation-for="Sender.Address"></span>
         </dd>
     </dl>
-    <button type="button" class="btn btn-primary" id="buttonRegister" onclick="onRegister()">Зарегистрировать</button>
+    <input type="submit" class="btn btn-primary" id="buttonRegister" value="Зарегистрировать"/>
     <button type="button" class="btn btn-default" data-dismiss="modal" id="buttonCancel">Отменить</button>
 </form>
