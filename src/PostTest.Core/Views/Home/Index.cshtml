@@ -15,7 +15,7 @@
             <div class="btn btn-group">
                 <a href="#registerModal" class="btn btn-primary" data-toggle="modal">Регистрация посылки</a>
                 <div id="registerModal" class="modal fade">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog modal-md">
                         <div class="modal-content">
                             <!-- Заголовок модального окна -->
                             <div class="modal-header">
@@ -25,7 +25,74 @@
                             <!-- Основное содержимое модального окна -->
                             <div class="modal-body">
                                 <div class="container-fluid" id="register">
-                                    @{ await Html.RenderPartialAsync("_ParcelRegister"); }
+                                    <form class="form-horizontal form-inline" id="formRegister" role="form">
+                                        <div class="form-group">
+                                            <dl class="dl-horizontal">
+                                                <dt>
+                                                    <label class="control-label" for="Weight">Вес</label>
+                                                </dt>
+                                                <dd>
+                                                    <input type="text" class="form-control" placeholder="100,50" id="Weight" required/>
+                                                </dd>
+                                                <dt>
+                                                    <label class="control-label" for="Inventory">Опись</label>
+                                                </dt>
+                                                <dd>
+                                                    <input type="text" class="form-control" placeholder="рубашка,брюки и носки" id="Inventory"/>
+                                                </dd>
+                                                <dt>
+                                                    <label class="control-label" for="Recipient_LastName">Фамилия получателя</label>
+                                                </dt>
+                                                <dd>
+                                                    <input type="text" class="form-control" placeholder="Иванов" id="Recipient_LastName" name="Recipient_LastName" maxlength="20" required/>
+                                                </dd>
+                                                <dt>
+                                                    <label class="control-label" for="Recipient_FirstName">Имя получателя</label>
+                                                </dt>
+                                                <dd>
+                                                    <input type="text" class="form-control" placeholder="Иван" id="Recipient_FirstName" name="Recipient_FirstName" maxlength="20" required/>
+                                                </dd>
+                                                <dt>
+                                                    <label class="control-label" for="Recipient_Patronymic">Отчество получателя</label>
+                                                </dt>
+                                                <dd>
+                                                    <input type="text" class="form-control" placeholder="Иванович" id="Recipient_Patronymic" name="Recipient_Patronymic" maxlength="20" required/>
+                                                </dd>
+                                                <dt>
+                                                    <label class="control-label" for="Recipient_Address">Адрес получателя</label>
+                                                </dt>
+                                                <dd>
+                                                    <input type="text" class="form-control" placeholder="Москва" id="Recipient_Address" name="Recipient_Address" maxlength="50" required/>
+                                                </dd>
+                                                <dt>
+                                                    <label class="control-label" for="Sender_LastName">Фамилия отправителя</label>
+                                                </dt>
+                                                <dd>
+                                                    <input type="text" class="form-control" placeholder="Петров" id="Sender_LastName" name="Sender_LastName" maxlength="20" required/>
+                                                </dd>
+                                                <dt>
+                                                    <label class="control-label" for="Sender_FirstName">Имя отправителя</label>
+                                                </dt>
+                                                <dd>
+                                                    <input type="text" class="form-control" placeholder="Петр" id="Sender_FirstName" name="Sender_FirstName" maxlength="20" required/>
+                                                </dd>
+                                                <dt>
+                                                    <label class="control-label" for="Sender_Patronymic">Отчество отправителя</label>
+                                                </dt>
+                                                <dd>
+                                                    <input type="text" class="form-control" placeholder="Петрович" id="Sender_Patronymic" name="Sender_Patronymic" maxlength="20" required/>
+                                                </dd>
+                                                <dt>
+                                                    <label class="control-label" for="Sender_Address">Адрес отправителя</label>
+                                                </dt>
+                                                <dd>
+                                                    <input type="text" class="form-control" placeholder="Брянск" id="Sender_Address" name="Sender_Address" maxlength="50" required/>
+                                                </dd>
+                                            </dl>
+                                            <input type="submit" class="btn btn-primary" value="Зарегистрировать">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" id="buttonCancel">Отменить</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                             <!-- Футер модального окна -->
@@ -37,7 +104,7 @@
             </div>
         </div>
         <div id="searchresults">
-            @*@{ await Html.RenderPartialAsync("_ParcelSearch", (IEnumerable<ParcelViewModel>) ViewBag.Parcels); }*@
+            <!-- Список посылок -->
         </div>
     </div>
 </div>
@@ -50,13 +117,15 @@
             $('#buttonSearch').click(searchRender);
         });
 
-        function closeModal(obj) {
-            if (obj) {
-                $('#registerModal').modal("hide");
+        $('#formRegister').submit(function () {
+            var validator = $("#formRegister").validate();
+            if (validator.form()) {
+                register();
+                this.form.reset();
                 searchRender();
-                clearForm();
-            };
-        }
+            }
+            return false;
+        });
 
         function searchRender() {
             $.ajax({
@@ -72,7 +141,7 @@
             });
         }
 
-        function onRegister() {
+        function register() {
             $.ajax({
                 url: '@Url.Action("ParcelRegister", "Home")',
                 data: getFormJson(),
@@ -80,7 +149,7 @@
                 contentType: 'application/json',
                 dataType: 'json',
                 success: function(obj) {
-                    closeModal(obj);
+                    $('#registerModal').modal("hide");
                 },
                 error: function(obj) {
                     alert('Error!');
@@ -106,19 +175,6 @@
                 }
             };
             return JSON.stringify(obj);
-        }
-
-        function clearForm() {
-            $('#Weight').val("");
-            $('#Inventory').val("");
-            $('#Recipient_FirstName').val("");
-            $('#Recipient_LastName').val("");
-            $('#Recipient_Patronymic').val("");
-            $('#Recipient_Address').val("");
-            $('#Sender_FirstName').val("");
-            $('#Sender_LastName').val("");
-            $('#Sender_Patronymic').val("");
-            $('#Sender_Address').val("");
         }
     </script>
 }
