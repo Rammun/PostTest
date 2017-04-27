@@ -31,7 +31,7 @@ namespace PostTest.Core.Controllers
             ViewBag.Parcels = _mapper.Map<IEnumerable<Parcel>, IEnumerable<ParcelViewModel>>(parcels);
             ViewBag.Register = new ParcelRegisterViewModel();
 
-            return View();
+            return View(new ParcelRegisterViewModel());
         }
 
         [HttpGet]

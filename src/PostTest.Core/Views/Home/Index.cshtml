@@ -33,6 +33,7 @@
                                 <div class="container-fluid" id="register">
                                     @*@{ await Html.RenderPartialAsync("_ParcelRegister", (ParcelRegisterViewModel)ViewBag.Register); }*@
                                 </div>
+                            </div>
                             <!-- Футер модального окна -->
                             <div id="mfooter" class="modal-footer">
                             </div>
@@ -128,9 +129,24 @@
 
         function getFormObj(form) {
             var param = {};
-            form.serializeArray().forEach(function(item, i, arr) {
-                param[item.Name] = item;
-            });
+            param.Recipient = {};
+            param.Sender = {};
+
+            var formParam = form.serializeArray();
+
+            param.Weight = formParam[0].value;
+            param.Inventory = formParam[1].value;
+
+            param.Recipient.FirstName = formParam[2].value;
+            param.Recipient.LastName = formParam[3].value;
+            param.Recipient.Patronymic = formParam[4].value;
+            param.Recipient.Address = formParam[5].value;
+
+            param.Sender.FirstName = formParam[6].value;
+            param.Sender.LastName = formParam[7].value;
+            param.Sender.Patronymic = formParam[8].value;
+            param.Sender.Address = formParam[9].value;
+
             return JSON.stringify(param);
         }
     </script>
