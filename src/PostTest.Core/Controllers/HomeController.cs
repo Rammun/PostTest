@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using PostTest.Core.Data;
 using PostTest.Core.Entities;
 using PostTest.Core.Models;
@@ -24,18 +22,16 @@ namespace PostTest.Core.Controllers
         {
             return View();
         }
-
-        [HttpGet]
-        public ActionResult ParcelRegister()
-        {
-            var parcel = new ParcelRegisterViewModel();
-            return PartialView("_ParcelRegister", parcel);
-        }
-
+        
         [HttpPost]
         public IActionResult ParcelRegister([FromBody]ParcelRegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+            {
+                return Ok(false);
+            }
+
+            try
             {
                 var parcel = Mapper.Map<ParcelRegisterViewModel, Parcel>(model);
 
@@ -44,36 +40,45 @@ namespace PostTest.Core.Controllers
 
                 return Ok(true);
             }
-
-            return Ok(false);
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet]
         public ActionResult ParcelSearch(string search = null)
         {
-            var parcels = _dbContext
-                .Parcels
-                .Include(r => r.Recipient)
-                .Include(s => s.Sender);
-
-            IEnumerable<Parcel> answer = parcels;
-
-            if (!string.IsNullOrEmpty(search))
+            try
             {
-                answer = parcels
-                    .Where(x =>
-                        x.Recipient.Address.Contains(search) ||
-                        x.Recipient.FirstName.Contains(search) ||
-                        x.Recipient.LastName.Contains(search) ||
-                        x.Recipient.Patronymic.Contains(search) ||
-                        x.Sender.Address.Contains(search) ||
-                        x.Sender.FirstName.Contains(search) ||
-                        x.Sender.LastName.Contains(search) ||
-                        x.Sender.Patronymic.Contains(search));
-            }
+                var parcels = _dbContext
+                    .Parcels
+                    .Include(r => r.Recipient)
+                    .Include(s => s.Sender);
 
-            var result = Mapper.Map<IEnumerable<Parcel>, IEnumerable<ParcelViewModel>>(answer.ToList());
-            return PartialView("_ParcelSearch", result);
+                IEnumerable<Parcel> answer = parcels;
+
+                if (!string.IsNullOrEmpty(search))
+                {
+                    answer = parcels
+                        .Where(x =>
+                            x.Recipient.Address.Contains(search) ||
+                            x.Recipient.FirstName.Contains(search) ||
+                            x.Recipient.LastName.Contains(search) ||
+                            x.Recipient.Patronymic.Contains(search) ||
+                            x.Sender.Address.Contains(search) ||
+                            x.Sender.FirstName.Contains(search) ||
+                            x.Sender.LastName.Contains(search) ||
+                            x.Sender.Patronymic.Contains(search));
+                }
+
+                var result = Mapper.Map<IEnumerable<Parcel>, IEnumerable<ParcelViewModel>>(answer.ToList());
+                return PartialView("_ParcelSearch", result);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         public IActionResult About()

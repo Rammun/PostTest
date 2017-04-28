@@ -1,4 +1,6 @@
-﻿//searchRender();
+﻿//"use strict";
+
+//searchRender();
 
 //$(document).ready(function () {
 //    $('#buttonSearch').click(searchRender);
@@ -39,27 +41,27 @@
 //            $('#registerModal').modal("hide");
 //        },
 //        error: function (obj) {
-//            alert('Error!');
+//            alert('Не валидные параметры!');
 //        }
 //    });
 //}
 
 //function getFormJson() {
-//    var obj = {
-//        weight: $('#Weight').val(),
-//        inventory: $('#Inventory').val(),
+//    var parcel = {
+//        weight: $('#parcel_weight').val(),
+//        inventory: $('#parcel_inventory').val(),
 //        recipient: {
-//            firstName: $('#Recipient_FirstName').val(),
-//            lastName: $('#Recipient_LastName').val(),
-//            patronymic: $('#Recipient_Patronymic').val(),
-//            address: $('#Recipient_Address').val()
+//            firstName: $('#recipient_firstName').val(),
+//            lastName: $('#recipient_lastName').val(),
+//            patronymic: $('#recipient_patronymic').val(),
+//            address: $('#recipient_address').val()
 //        },
 //        sender: {
-//            firstName: $('#Sender_FirstName').val(),
-//            lastName: $('#Sender_LastName').val(),
-//            patronymic: $('#Sender_Patronymic').val(),
-//            address: $('#Sender_Address').val()
+//            firstName: $('#sender_firstName').val(),
+//            lastName: $('#sender_lastName').val(),
+//            patronymic: $('#sender_patronymic').val(),
+//            address: $('#sender_address').val()
 //        }
 //    };
-//    return JSON.stringify(obj);
+//    return JSON.stringify(parcel);
 //}

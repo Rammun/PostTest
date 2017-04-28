@@ -5,12 +5,12 @@
         <thead>
             <tr>
                 <th>N</th>
-                <th>@Html.DisplayNameFor(x => x.RecipientFullName)</th>
-                <th>@Html.DisplayNameFor(x => x.RecipientAdress)</th>
-                <th>@Html.DisplayNameFor(x => x.SenderFullName)</th>
-                <th>@Html.DisplayNameFor(x => x.SenderAdress)</th>
-                <th>@Html.DisplayNameFor(x => x.Weight)</th>
-                <th>@Html.DisplayNameFor(x => x.Inventory)</th>
+                <th><label asp-for="@Model.First().RecipientFullName"></label></th>
+                <th><label asp-for="@Model.First().RecipientAdress"></label></th>
+                <th><label asp-for="@Model.First().SenderFullName"></label></th>
+                <th><label asp-for="@Model.First().SenderAdress"></label></th>
+                <th><label asp-for="@Model.First().Weight"></label></th>
+                <th><label asp-for="@Model.First().Inventory"></label></th>
             </tr>
         </thead>
         <tbody>
