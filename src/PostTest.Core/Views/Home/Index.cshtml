@@ -24,69 +24,69 @@
                             </div>
                             <!-- Основное содержимое модального окна -->
                             <div class="modal-body">
-                                <div class="container-fluid" id="register">
-                                    <form class="form-horizontal form-inline" id="formRegister" role="form">
+                                <div class="container-fluid" id="register" name="register">
+                                    <form class="form-horizontal form-inline" role="form" id="formRegister" name="formRegister">
                                         <div class="form-group">
                                             <dl class="dl-horizontal">
                                                 <dt>
-                                                    <label class="control-label" for="Weight">Вес</label>
+                                                    <label class="control-label" for="parcel_weight">Вес</label>
                                                 </dt>
                                                 <dd>
-                                                    <input type="text" class="form-control" placeholder="100,50" id="Weight" required/>
+                                                    <input type="text" class="form-control" placeholder="100,50" id="parcel_weight" name="parcel_weight" />
                                                 </dd>
                                                 <dt>
-                                                    <label class="control-label" for="Inventory">Опись</label>
+                                                    <label class="control-label" for="parcel_inventory">Опись</label>
                                                 </dt>
                                                 <dd>
-                                                    <input type="text" class="form-control" placeholder="рубашка,брюки и носки" id="Inventory"/>
+                                                    <input type="text" class="form-control" placeholder="рубашка,брюки и носки" id="parcel_inventory" name="parcel_inventory"/>
                                                 </dd>
                                                 <dt>
-                                                    <label class="control-label" for="Recipient_LastName">Фамилия получателя</label>
+                                                    <label class="control-label" for="recipient_lastName">Фамилия получателя</label>
                                                 </dt>
                                                 <dd>
-                                                    <input type="text" class="form-control" placeholder="Иванов" id="Recipient_LastName" name="Recipient_LastName" maxlength="20" required/>
+                                                    <input type="text" class="form-control" placeholder="Иванов" id="recipient_lastName" name="recipient_lastName" maxlength="20" required />
                                                 </dd>
                                                 <dt>
-                                                    <label class="control-label" for="Recipient_FirstName">Имя получателя</label>
+                                                    <label class="control-label" for="recipient_firstName">Имя получателя</label>
                                                 </dt>
                                                 <dd>
-                                                    <input type="text" class="form-control" placeholder="Иван" id="Recipient_FirstName" name="Recipient_FirstName" maxlength="20" required/>
+                                                    <input type="text" class="form-control" placeholder="Иван" id="recipient_firstName" name="recipient_firstName" maxlength="20" required />
                                                 </dd>
                                                 <dt>
-                                                    <label class="control-label" for="Recipient_Patronymic">Отчество получателя</label>
+                                                    <label class="control-label" for="recipient_patronymic">Отчество получателя</label>
                                                 </dt>
                                                 <dd>
-                                                    <input type="text" class="form-control" placeholder="Иванович" id="Recipient_Patronymic" name="Recipient_Patronymic" maxlength="20" required/>
+                                                    <input type="text" class="form-control" placeholder="Иванович" id="recipient_patronymic" name="recipient_patronymic" maxlength="20" required />
                                                 </dd>
                                                 <dt>
-                                                    <label class="control-label" for="Recipient_Address">Адрес получателя</label>
+                                                    <label class="control-label" for="recipient_address">Адрес получателя</label>
                                                 </dt>
                                                 <dd>
-                                                    <input type="text" class="form-control" placeholder="Москва" id="Recipient_Address" name="Recipient_Address" maxlength="50" required/>
+                                                    <input type="text" class="form-control" placeholder="Москва" id="recipient_address" name="recipient_address" maxlength="50" required />
                                                 </dd>
                                                 <dt>
-                                                    <label class="control-label" for="Sender_LastName">Фамилия отправителя</label>
+                                                    <label class="control-label" for="sender_lastName">Фамилия отправителя</label>
                                                 </dt>
                                                 <dd>
-                                                    <input type="text" class="form-control" placeholder="Петров" id="Sender_LastName" name="Sender_LastName" maxlength="20" required/>
+                                                    <input type="text" class="form-control" placeholder="Петров" id="sender_lastName" name="sender_lastName" maxlength="20" required />
                                                 </dd>
                                                 <dt>
-                                                    <label class="control-label" for="Sender_FirstName">Имя отправителя</label>
+                                                    <label class="control-label" for="sender_firstName">Имя отправителя</label>
                                                 </dt>
                                                 <dd>
-                                                    <input type="text" class="form-control" placeholder="Петр" id="Sender_FirstName" name="Sender_FirstName" maxlength="20" required/>
+                                                    <input type="text" class="form-control" placeholder="Петр" id="sender_firstName" name="sender_firstName" maxlength="20" required />
                                                 </dd>
                                                 <dt>
-                                                    <label class="control-label" for="Sender_Patronymic">Отчество отправителя</label>
+                                                    <label class="control-label" for="sender_patronymic">Отчество отправителя</label>
                                                 </dt>
                                                 <dd>
-                                                    <input type="text" class="form-control" placeholder="Петрович" id="Sender_Patronymic" name="Sender_Patronymic" maxlength="20" required/>
+                                                    <input type="text" class="form-control" placeholder="Петрович" id="sender_patronymic" name="sender_patronymic" maxlength="20" required />
                                                 </dd>
                                                 <dt>
-                                                    <label class="control-label" for="Sender_Address">Адрес отправителя</label>
+                                                    <label class="control-label" for="sender_address">Адрес отправителя</label>
                                                 </dt>
                                                 <dd>
-                                                    <input type="text" class="form-control" placeholder="Брянск" id="Sender_Address" name="Sender_Address" maxlength="50" required/>
+                                                    <input type="text" class="form-control" placeholder="Брянск" id="sender_address" name="sender_address" maxlength="50" required />
                                                 </dd>
                                             </dl>
                                             <input type="submit" class="btn btn-primary" value="Зарегистрировать">
@@ -111,6 +111,8 @@
 
 @section Scripts {
     <script>
+        "use strict";
+
         searchRender();
 
         $(document).ready(function() {
@@ -152,29 +154,29 @@
                     $('#registerModal').modal("hide");
                 },
                 error: function(obj) {
-                    alert('Error!');
+                    alert('Не валидные параметры!');
                 }
             });
         }
 
         function getFormJson() {
-            var obj = {
-                weight: $('#Weight').val(),
-                inventory: $('#Inventory').val(),
+            var parcel = {
+                weight: $('#parcel_weight').val(),
+                inventory: $('#parcel_inventory').val(),
                 recipient: {
-                    firstName: $('#Recipient_FirstName').val(),
-                    lastName: $('#Recipient_LastName').val(),
-                    patronymic: $('#Recipient_Patronymic').val(),
-                    address: $('#Recipient_Address').val()
+                    firstName: $('#recipient_firstName').val(),
+                    lastName: $('#recipient_lastName').val(),
+                    patronymic: $('#recipient_patronymic').val(),
+                    address: $('#recipient_address').val()
                 },
                 sender: {
-                    firstName: $('#Sender_FirstName').val(),
-                    lastName: $('#Sender_LastName').val(),
-                    patronymic: $('#Sender_Patronymic').val(),
-                    address: $('#Sender_Address').val()
+                    firstName: $('#sender_firstName').val(),
+                    lastName: $('#sender_lastName').val(),
+                    patronymic: $('#sender_patronymic').val(),
+                    address: $('#sender_address').val()
                 }
             };
-            return JSON.stringify(obj);
+            return JSON.stringify(parcel);
         }
     </script>
 }
